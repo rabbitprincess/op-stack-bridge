@@ -3,8 +3,7 @@ import { createPublicClient, createWalletClient, custom, http, parseEther, toHex
 import { walletActionsL1, publicActionsL2, getL2TransactionHashes } from 'viem/op-stack';
 import { mainnet } from 'viem/chains';
 import { L2Chain } from '../../config/chain';
-import TabMenu from '../TabMenu'; // TabMenu 컴포넌트를 import 해야합니다.
-
+import TabMenu from '../TabMenu';
 
 const Deposit = () => {
     const [formData, setFormData] = useState({
