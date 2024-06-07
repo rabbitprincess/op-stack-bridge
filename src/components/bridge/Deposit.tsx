@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { createPublicClient, createWalletClient, custom, http, parseEther } from 'viem';
+import { createPublicClient, createWalletClient, custom, http, parseEther, toHex } from 'viem';
 import { walletActionsL1, publicActionsL2, getL2TransactionHashes } from 'viem/op-stack';
 import { mainnet } from 'viem/chains';
 import { L2Chain } from '../../config/chain';
@@ -20,12 +20,12 @@ const Deposit = () => {
     const switchNetwork = () => {
         window.ethereum.request({
             method: 'wallet_switchEthereumChain',
-            params: [{ chainId: '0x' + process.env.REACT_APP_L2_CHAIN_ID.toString(16) }],
+            params: [{ chainId: toHex(process.env.REACT_APP_L2_CHAIN_ID) }],
         }).catch((error) => {
             if (error.code === 4902) {
                 window.ethereum.request({
                     method: 'wallet_addEthereumChain',
-                    params: [{ chainId: '0x' + process.env.REACT_APP_L2_CHAIN_ID.toString(16) }],
+                    params: [{ chainId: '0x' + toHex(process.env.REACT_APP_L2_CHAIN_ID) }],
                 });
             }
         });
@@ -60,7 +60,7 @@ const Deposit = () => {
             chain: L2Chain,
             transport: http()
         }).extend(publicActionsL2());
-        
+
         try {
             switch (sendToken) {
                 case 'ETH':
