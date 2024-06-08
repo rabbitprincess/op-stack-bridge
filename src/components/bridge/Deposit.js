@@ -78,22 +78,21 @@ const Deposit = () => {
             return;
         } else if (parseFloat(ethValue) <= 0) {
             setErrorInput("Please enter a valid amount: " + ethValue)
+            return;
         }
+
         const [account] = await window.ethereum.request({ 
             method: 'eth_requestAccounts' 
         });
-
         const publicClientL1 = createPublicClient({
             chain: L1Chain,
             transport: http()
         });
-
         const walletClientL1 = createWalletClient({
             account,
             chain: L1Chain,
             transport: custom(window.ethereum)
         }).extend(walletActionsL1());
-
         const publicClientL2 = createPublicClient({
             chain: L2Chain,
             transport: http()
