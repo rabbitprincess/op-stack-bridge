@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
-import Deposit from './components/Deposit';
+import Deposit from './components/bridge/Deposit';
 import Withdraw from './components/Withdraw';
 import WithdrawAccount from "./components/account/WithdrawAccount";
 import DepositAccount from "./components/account/DepositAccount";
