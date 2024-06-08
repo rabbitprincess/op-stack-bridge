@@ -79,20 +79,25 @@ const Deposit = () => {
         } else if (parseFloat(ethValue) <= 0) {
             setErrorInput("Please enter a valid amount: " + ethValue)
         }
+        const [account] = await window.ethereum.request({ 
+            method: 'eth_requestAccounts' 
+        });
 
         const publicClientL1 = createPublicClient({
             chain: L1Chain,
             transport: http()
         });
+
+        const walletClientL1 = createWalletClient({
+            account,
+            chain: L1Chain,
+            transport: custom(window.ethereum)
+        }).extend(walletActionsL1());
+
         const publicClientL2 = createPublicClient({
             chain: L2Chain,
             transport: http()
         }).extend(publicActionsL2());
-        const walletClientL1 = createWalletClient({
-            address,
-            chain: L1Chain,
-            transport: custom(window.ethereum)
-        }).extend(walletActionsL1());
 
         try {
             switch (sendToken) {
@@ -100,14 +105,17 @@ const Deposit = () => {
                     // Build parameters for the transaction on the L2.
                     const args = await publicClientL2.buildDepositTransaction({
                         mint: parseEther(ethValue),
-                        to: address,
+                        to: account,
                     });
 
                     setLoader(true);
                     const hash = await walletClientL1.depositTransaction(args);
                     const receipt = await publicClientL1.waitForTransactionReceipt({ hash });
-                    const l2Hash = getL2TransactionHashes(receipt);
-                    const l2Receipt = await publicClientL2.waitForTransactionReceipt(l2Hash);
+                    const [l2Hash] = getL2TransactionHashes(receipt);
+                    const l2Receipt = await publicClientL2.waitForTransactionReceipt({
+                        hash: l2Hash
+                    });
+                    console.log('L2 Receipt', l2Receipt);
                     setLoader(false);
                     break;
                 default:
@@ -183,7 +191,7 @@ const Deposit = () => {
                     <div className='deposit_price_wrap'>
                         <div className='deposit_price_title'>
                             <p>From</p>
-                            <h5><FaEthereum /> Sepolia Testnet</h5>
+                            <h5><FaEthereum /> {L1Chain.name}</h5>
                         </div>
                         <div className='deposit_input_wrap'>
                             <Form>
@@ -216,7 +224,7 @@ const Deposit = () => {
                         </div>
                     </div>
                     <div className="deposit_btn_wrap">
-                        {checkMetaMask === true ? <a className='btn deposit_btn' href='https://metamask.io/' target='_blank'><Image src={metamask} alt="metamask icn" fluid /> Please Install Metamask Wallet</a> : !isConnected ? <button className='btn deposit_btn' onClick={() => connect()}><IoMdWallet />Connect Wallet</button> : chain.id !== Number(process.env.REACT_APP_L1_CHAIN_ID) ? <button className='btn deposit_btn' onClick={handleSwitch}><HiSwitchHorizontal />Switch to Sepolia</button> :
+                        {checkMetaMask === true ? <a className='btn deposit_btn' href='https://metamask.io/' target='_blank'><Image src={metamask} alt="metamask icn" fluid /> Please Install Metamask Wallet</a> : !isConnected ? <button className='btn deposit_btn' onClick={() => connect()}><IoMdWallet />Connect Wallet</button> : chain.id !== Number(process.env.REACT_APP_L1_CHAIN_ID) ? <button className='btn deposit_btn' onClick={handleSwitch}><HiSwitchHorizontal />Switch to {L1Chain.name}</button> :
                             checkDisabled ? <button className='btn deposit_btn' disabled={true}>Deposit</button> :
                                 <button className='btn deposit_btn' onClick={handleDeposit} disabled={loader ? true : false}> {loader ? <Spinner animation="border" role="status">
                                     <span className="visually-hidden">Loading...</span>
