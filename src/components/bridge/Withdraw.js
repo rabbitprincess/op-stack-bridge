@@ -5,7 +5,7 @@ import toIcn from "../../assets/images/logo.png"
 import metamask from "../../assets/images/metamask.svg"
 import { GetL1Chain, GetL2Chain } from '../../config/chain';
 import { createPublicClient, createWalletClient, custom, http, parseEther } from 'viem'
-import { publicActionsL1, walletActionsL1, walletActionsL2 } from 'viem/op-stack'
+import { publicActionsL1, publicActionsL2, walletActionsL1, walletActionsL2 } from 'viem/op-stack'
 import { Form, Image, Spinner } from "react-bootstrap";
 import { Dai, Usdt, Usdc, Ethereum, Btc } from 'react-web3-icons';
 import { MdOutlineSecurity } from "react-icons/md"
@@ -133,7 +133,7 @@ const Withdraw = () => {
 		const publicClientL2 = createPublicClient({
 			chain: L2Chain,
 			transport: http()
-		})
+		}).extend(publicActionsL2())
 		
 		const walletClientL2 = createWalletClient({
 			account,
