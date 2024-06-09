@@ -24,9 +24,9 @@ const Withdraw = () => {
     const [loader, setLoader] = useState(false)
     const { address, isConnected } = useAccount()
     const { chain, chains } = useNetwork()
-	const [Balance, setBalance] = useState(0)
+    const [Balance, setBalance] = useState(0)
 
-	const L1Chain = GetL1Chain();
+  	const L1Chain = GetL1Chain();
     const L2Chain = GetL2Chain();
 
     const { connect } = useConnect({
@@ -310,7 +310,7 @@ const Withdraw = () => {
           <div className='deposit_price_wrap'>
             <div className='deposit_price_title'>
               <p>From</p>
-              <h5><Image src={toIcn} alt="To icn" fluid /> Race</h5>
+              <h5><Image src={toIcn} alt="To icn" fluid /> {L2Chain.name}</h5>
             </div>
             <div className='deposit_input_wrap'>
               <Form>
@@ -335,7 +335,7 @@ const Withdraw = () => {
           <div className='deposit_details_wrap'>
             <div className="deposit_details">
               <p>To:</p>
-              <h5><FaEthereum /> Sepolia Testnet</h5>
+              <h5><FaEthereum /> {L1Chain.name}</h5>
             </div>
             <div className='withdraw_bal_sum'>
               {sendToken == "ETH" ? <span className='input_icn'><Ethereum style={{ fontSize: '1.5rem' }} /></span> : sendToken == "DAI" ? <span className='input_icn'><Dai style={{ fontSize: '1.5rem' }} /></span> : sendToken == "USDT" ? <span className='input_icn'><Usdt style={{ fontSize: '1.5rem' }} /></span> : sendToken == "wBTC" ? <span className='input_icn'><Btc style={{ fontSize: '1.5rem' }} /></span> : <span className='input_icn'><Usdc style={{ fontSize: '1.5rem' }} /></span>}
@@ -345,7 +345,7 @@ const Withdraw = () => {
             </div>
           </div>
           <div className="deposit_btn_wrap">
-            {checkMetaMask === true ? <a className='btn deposit_btn' href='https://metamask.io/' target='_blank'><Image src={metamask} alt="metamask icn" fluid /> Please Install Metamask Wallet</a> : !isConnected ? <button className='btn deposit_btn' onClick={() => connect()}><IoMdWallet />Connect Wallet</button> : chain.id !== Number(process.env.REACT_APP_L2_CHAIN_ID) ? <button className='btn deposit_btn' onClick={handleSwitch}><HiSwitchHorizontal />Switch to RACE Testnet</button> :
+            {checkMetaMask === true ? <a className='btn deposit_btn' href='https://metamask.io/' target='_blank'><Image src={metamask} alt="metamask icn" fluid /> Please Install Metamask Wallet</a> : !isConnected ? <button className='btn deposit_btn' onClick={() => connect()}><IoMdWallet />Connect Wallet</button> : chain.id !== Number(process.env.REACT_APP_L2_CHAIN_ID) ? <button className='btn deposit_btn' onClick={handleSwitch}><HiSwitchHorizontal />Switch to {L2Chain.name} Testnet</button> :
               checkDisabled ? <button className='btn deposit_btn' disabled={true}>Withdraw</button> :
                 <button className='btn deposit_btn' onClick={handleWithdraw} disabled={loader ? true : false}>{loader ? <Spinner animation="border" role="status">
                   <span className="visually-hidden">Loading...</span>
