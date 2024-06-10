@@ -8,7 +8,6 @@ import { store } from './store'
 import { Provider } from 'react-redux'
 import { WagmiConfig, createConfig, createStorage } from 'wagmi'
 import { configureChains } from '@wagmi/core'
-import { sepolia } from '@wagmi/core/chains'
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import { GetL1Chain, GetL2Chain } from './config/chain';
