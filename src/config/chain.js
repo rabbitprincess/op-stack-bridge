@@ -47,7 +47,7 @@ export function GetL2Chain() {
 		default:
 			return defineChain({
 				...chainConfig,
-				id: process.env.REACT_APP_L2_CHAIN_ID,
+				id: Number(process.env.REACT_APP_L2_CHAIN_ID),
 				name: process.env.REACT_APP_L2_NETWORK_NAME,
 				nativeCurrency: { name: 'ETHEREUM', symbol: 'ETH', decimals: 18 },
 				rpcUrls: {

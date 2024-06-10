@@ -66,10 +66,10 @@ const Withdraw = () => {
                   method: "wallet_addEthereumChain",
                   params: [{
                       chainId: (function (dec) { return `0x${parseInt(dec, 10).toString(16)}`; })(L2Chain.id),
-                      rpcUrls: L2Chain.rpcUrls,
+                      rpcUrls: L2Chain.rpcUrls.default.http,
                       chainName: L2Chain.name,
                       nativeCurrency: L2Chain.nativeCurrency,
-                      blockExplorerUrls: L2Chain.blockExplorers,
+                      blockExplorerUrls: [L2Chain.blockExplorers.default.url],
                   }]
               }).then((data) => {
                   setMetaMaskError("")
