@@ -74,7 +74,7 @@ const DepositAccount = () => {
             bedrock: true,
         })
         const data = await crossChainMessenger.getDepositsByAddress(address)
-        for (let index = 0; index < data.length; index++) {
+        for (let index = 6222260; index < data.length; index++) {
             let timestamp = (await l1Provider.getBlock(data[index].blockNumber)).timestamp;
             data[index].timestamp = timestamp
         }
