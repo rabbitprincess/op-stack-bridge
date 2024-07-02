@@ -27,10 +27,13 @@
     "react-scripts": "5.0.1",
     "react-web3-icons": "^1.7.0",
     "sass": "^1.63.5",
-    "viem": "^1.1.0",
+    "viem": "^2.13.7",
     "wagmi": "^1.2.0",
     "web-vitals": "^2.1.4",
     "web3": "^4.0.1"
+  },
+    "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.14.5"
   },
   "scripts": {
     "start": "react-scripts start",

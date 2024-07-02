@@ -1,11 +1,16 @@
+import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
-import Deposit from './components/Deposit';
-import Withdraw from './components/Withdraw';
+import Deposit from './components/bridge/Deposit';
+import Withdraw from './components/bridge/Withdraw';
 import WithdrawAccount from "./components/account/WithdrawAccount";
 import DepositAccount from "./components/account/DepositAccount";
 function App() {
+  useEffect(() => {
+    document.title = process.env.REACT_APP_L2_NETWORK_NAME + ' Bridge' || 'Unknown Bridge';
+  }, []);
+
   return (
     <>
       <BrowserRouter>

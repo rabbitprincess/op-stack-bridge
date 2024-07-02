@@ -14,6 +14,7 @@ import metamask from "../../assets/images/metamask.svg"
 // import { BiPowerOff } from "react-icons/bi"
 import { useDisconnect } from 'wagmi'
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { GetL1Chain, GetL2Chain } from '../../config/chain';
 const HeaderNew = () => {
     const [copyTextSourceCode, setCopyTextSourceCode] = useState("Copy address to clipboard")
     const { address, isConnected } = useAccount();
@@ -41,7 +42,7 @@ const HeaderNew = () => {
         await disconnect()
     }
     useEffect(() => {
-        if (chain?.id == 90001 || chain?.id == 11155111) {
+        if (chain?.id == GetL1Chain().id || chain?.id == GetL2Chain().id) {
             setNetwork(chain.name)
             console.log(chain.name);
         }
